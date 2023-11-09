@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
-    match: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, // Custom email validation
+    match: /^[a-zA-Z0-9._%+-]+@northeastern\.edu$/, // Custom email validation
   },
   password: {
     type: String,
@@ -64,7 +64,7 @@ app.post('/user/create', async (req, res) => {
     res.send('User created');
   } catch (error) {
     console.error('Error creating user:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: 'Name should be atleast 6 characters and email should be neu mailid only or user already exists' });
   }
 });
 
@@ -118,7 +118,7 @@ app.put('/user/edit', async (req, res) => {
     res.send('User updated');
   } catch (error) {
     console.error('Error updating user:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: 'user name and password should have atleast 6 characters' });
   }
 });
 
@@ -139,7 +139,7 @@ app.delete('/user/delete', async (req, res) => {
       const user = await UserModel.findOne({ email });
   
       if (!user) {
-        res.status(404).json({ error: 'User not found and enter email address only for deletion' });
+        res.status(404).json({ error: 'User not found (enter email address only for deletion)' });
         return;
       }
   
@@ -147,7 +147,7 @@ app.delete('/user/delete', async (req, res) => {
       res.send('User deleted');
     } catch (error) {
       console.error('Error deleting user:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
+      res.status(500).json({ error: 'Please send a valid delete request' });
     }
   });
 
@@ -163,7 +163,7 @@ app.delete('/user/delete', async (req, res) => {
       res.json(users);
     } catch (error) {
       console.error('Error retrieving user data:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
+      res.status(500).json({ error: 'Please send a valid get request' });
     }
   });
   
